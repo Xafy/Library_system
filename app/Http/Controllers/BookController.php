@@ -31,12 +31,27 @@ class BookController extends Controller
     }
 
     public function storeBook(Request $req){
+
+        $req->validate([
+            'title' => 'required|string|max:50',
+            'desc' => 'required|string',
+            'img' => 'image|mimes:jpg,png,jpeg'
+        ]);
+
+        $img = $req->file('img');
+        $ext = $img->getClientOriginalExtension();
+        $name = "book-" . uniqid() . ".$ext";
+        $img->move(public_path('uploads/books'), $name);
+
+
+        
         $title = $req->title;
         $desc = $req->desc;
 
         Book::create([
             'title' => $title,
-            'desc' => $desc
+            'desc' => $desc,
+            'img' => $name
         ]);
         return redirect(route('books.index')); 
     }
@@ -47,10 +62,30 @@ class BookController extends Controller
     }
 
     public function updateBook($id, Request $req){
+
+        $req->validate([
+            'title' => 'required|string|max:50',
+            'desc' => 'required|string',
+            'img' => 'nullable|image|mimes:jpg,png,jpeg'
+        ]);
+
         $book = Book::findOrFail($id);
+
+        $name = $book->img;
+        if ($req->hasFile('img')){
+            if($name !== null){
+                unlink(public_path('uploads/books/') . $name);
+            }
+            $img = $req->file('img');
+            $ext = $img->getClientOriginalExtension();
+            $name = "book-" . uniqid() . ".$ext";
+            $img->move(public_path('uploads/books'), $name);
+        }
+
 
         $book->title = $req->title;
         $book->desc = $req->desc;
+        $book->img = $name;
 
         $book->save();
 
@@ -58,6 +93,10 @@ class BookController extends Controller
     }
 
     public function deleteBook($id){
+        $book = Book::findOrFail($id);
+        if($book->img !== null){
+            unlink(public_path('uploads/books/') . $book->img);
+        }
         Book::destroy($id);
         return redirect(route('books.index'));
     }
