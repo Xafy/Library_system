@@ -17,8 +17,9 @@
         </form>
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
+          <a href="{{route('users.loginForm')}}" class="btn btn-outline-light me-2">Login</a>
+          <a href="{{route('users.registerForm')}}" class="btn btn-warning">Register</a>
+          <a href="{{route('users.logout')}}" class="btn btn-warning">Logout</a>
         </div>
       </div>
     </div>

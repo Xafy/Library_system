@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
@@ -19,6 +20,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Auth routes
+Route::get('/users', [AuthController::class, 'getUsers'])->name('users.index');
+Route::get('/users/register', [AuthController::class, 'registerForm'])->name('users.registerForm');
+Route::get('/users/login', [AuthController::class, 'loginForm'])->name('users.loginForm');
+Route::post('/users/register', [AuthController::class, 'register'])->name('users.register');
+Route::post('/users/login', [AuthController::class, 'login'])->name('users.login');
+Route::get('/users/logout', [AuthController::class, 'logout'])->name('users.logout');
 //Books routes
 Route::get('/books', [BookController::class, 'index'])->name('books.index') ;
 Route::get('/books/create', [BookController::class, 'createForm'])->name('books.form');
