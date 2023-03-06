@@ -5,6 +5,13 @@
 
 <h3>{{$category->name}}</h3>
 <hr>
+@if ($category->books->count() > 0)
+    <h5>Books</h5>
+    @foreach ($category->books as $book)
+        <a href="{{route('categories.show', $book->id)}}">{{$book->title}}</a>
+    @endforeach
+@endif
+<hr>
 <div>
     <a href="{{route('categories.editForm', $category->id)}}">Edit Category</a>
 </div>
