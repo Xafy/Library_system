@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\OAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,8 @@ Route::middleware('isGuest')->group(function(){
     Route::get('/users/login', [AuthController::class, 'loginForm'])->name('users.loginForm');
     Route::post('/users/register', [AuthController::class, 'register'])->name('users.register');
     Route::post('/users/login', [AuthController::class, 'login'])->name('users.login');
+    Route::get('/users/login/github', [OAuthController::class, 'redirectToGithub'])->name('github.redirect');
+    Route::get('/users/login/github/callback', [OAuthController::class, 'handleGithubCallback'])->name('github.callback');
 });
 Route::get('/users', [AuthController::class, 'getUsers'])->name('users.index');
 

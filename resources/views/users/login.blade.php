@@ -15,6 +15,9 @@
             </div>
             <button type="submit" class="btn btn-primary mb-3">Login</button>
         </form>
+        <div>
+            <a href="{{route('github.redirect')}}" class="btn btn-warning">Login Using Github</a>
+        </div>
     </div>
 </div>
 @endsection

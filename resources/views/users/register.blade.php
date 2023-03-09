@@ -27,6 +27,13 @@
             </div>
             <button type="submit" class="btn btn-primary mb-3">Register</button>
         </form>
+        <div>
+            <a href="{{route('github.redirect')}}" class="btn btn-warning">Register Using Github</a>
+        </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/facebook-sdk.js')}}"></script>
 @endsection
