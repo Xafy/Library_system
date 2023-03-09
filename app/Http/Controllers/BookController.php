@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Category;
 
 class BookController extends Controller
 {
@@ -23,7 +24,8 @@ class BookController extends Controller
     }
 
     public function createForm(){
-        return view('books.create');
+        $categories = Category::select('id', 'name')->get();
+        return view('books.create', compact('categories'));
     }
 
     public function somthing(){
@@ -35,24 +37,24 @@ class BookController extends Controller
         $req->validate([
             'title' => 'required|string|max:50',
             'desc' => 'required|string',
-            'img' => 'image|mimes:jpg,png,jpeg'
+            'img' => 'image|mimes:jpg,png,jpeg',
+            'categories' => 'required',
+            'categories.*' => 'exists:categories,id'
         ]);
 
         $img = $req->file('img');
         $ext = $img->getClientOriginalExtension();
-        $name = "book-" . uniqid() . ".$ext";
-        $img->move(public_path('uploads/books'), $name);
+        $img_name = "book-" . uniqid() . ".$ext";
+        $img->move(public_path('uploads/books'), $img_name);
 
-
-        
-        $title = $req->title;
-        $desc = $req->desc;
-
-        Book::create([
-            'title' => $title,
-            'desc' => $desc,
-            'img' => $name
+        $book = Book::create([
+            'title' => $req->title,
+            'desc' => $req->desc,
+            'img' => $img_name
         ]);
+
+        $book->categories()->sync($req->categories);
+
         return redirect(route('books.index')); 
     }
 

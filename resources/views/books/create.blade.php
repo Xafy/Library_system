@@ -17,6 +17,14 @@
                 <input type="file" class="form-control" name="img" id="inputGroupFile02">
                 <label class="input-group-text"  for="inputGroupFile02">Upload</label>
             </div>
+            <div>
+            @foreach ($categories as $category)
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="categories[]" type="checkbox" id="{{$category->name}}" value="{{$category->id}}">
+                    <label class="form-check-label" for="{{$category->name}}">{{$category->name}}</label>
+                </div>
+            @endforeach    
+            </div>
             <button type="submit" class="btn btn-primary mb-3">Add Book</button>
         </form>
     </div>
