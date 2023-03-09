@@ -9,6 +9,7 @@
           <li><a href="{{route('books.index')}}" class="nav-link px-2 text-secondary">Home</a></li>
           <li><a href="{{route('books.index')}}" class="nav-link px-2 text-white">Books</a></li>
           <li><a href="{{route('books.form')}}" class="nav-link px-2 text-white">Add Book</a></li>
+          <li><a href="{{route('notes.create')}}" class="nav-link px-2 text-white">Add Notes</a></li>
           <li><a href="#" class="nav-link px-2 text-white">About</a></li>
         </ul>
 
@@ -17,9 +18,14 @@
         </form>
 
         <div class="text-end">
+          @guest
           <a href="{{route('users.loginForm')}}" class="btn btn-outline-light me-2">Login</a>
           <a href="{{route('users.registerForm')}}" class="btn btn-warning">Register</a>
+          @endguest
+          @auth
+          <a href="#" class="link-light px-2">{{Auth::user()->name}}</a>
           <a href="{{route('users.logout')}}" class="btn btn-warning">Logout</a>
+          @endauth
         </div>
       </div>
     </div>

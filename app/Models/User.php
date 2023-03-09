@@ -24,4 +24,8 @@ class User extends Authenticatable
         // 'access_token',
     ];
 
+    public function notes(){
+        return $this->hasMany('App\Models\Note');
+    }
+
 }
