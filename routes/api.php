@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiBookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/books', [ApiBookController::class, 'index']);
+Route::get('/books/{id}', [ApiBookController::class, 'show']);
+Route::post('/books', [ApiBookController::class, 'store']);
+Route::patch('/books/{id}', [ApiBookController::class, 'update']);
+Route::delete('/books/{id}', [ApiBookController::class, 'delete']);
