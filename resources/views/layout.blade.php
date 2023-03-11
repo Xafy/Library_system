@@ -9,7 +9,8 @@
     @yield('styles')
 </head>
 <body>
-    @include('elements.nav')
+    {{-- @include('elements.nav') --}}
+    <x-navbar></x-navbar>
     <div class="container py-4">
         @yield('content')
     </div>
